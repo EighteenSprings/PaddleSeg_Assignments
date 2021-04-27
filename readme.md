@@ -2,7 +2,7 @@
 
 
 
-课程地址：[图像分割7日打卡营]([百度AI Studio - 人工智能学习与实训社区 (baidu.com)](https://aistudio.baidu.com/aistudio/education/group/info/1767))
+课程地址：[图像分割7日打卡营](https://aistudio.baidu.com/aistudio/education/group/info/1767)
 
 课程大纲：
 
