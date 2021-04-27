@@ -103,6 +103,22 @@ if __name__ == "__main__":
 
 ![FCN_Upsample_Upsampling4](assets/FCN_Upsample_Upsampling4.png)
 
+### Un-pooling
+
+![FCN_Upsample_Unpooling](assets/FCN_Upsample_Unpooling.png)
+
+Pooling 时记录位置，上采样时将相应的像素放回对应的位置（现在用得较少）
+
+
+
+### Transpose Conv
+
+![FCN_Upsample_TransposeConv](assets/FCN_Upsample_TransposeConv.png)
+
+具体细节如下
+
+![FCN_Upsample_TransposeConv2](assets/FCN_Upsample_TransposeConv2.png)
+
 
 
 
