@@ -6,6 +6,10 @@
 
 ![FCN_Index](assets/FCN_Index.png)
 
+## Part 1 理论部分
+
+
+
 本节课按照三部分进行：why、what 以及 how
 
 - 为什么用 FCN
@@ -119,9 +123,79 @@ Pooling 时记录位置，上采样时将相应的像素放回对应的位置（
 
 ![FCN_Upsample_TransposeConv2](assets/FCN_Upsample_TransposeConv2.png)
 
+老师在课上给予了推导过程
+
+![FCN_Upsample_TransposeConv3](assets/FCN_Upsample_TransposeConv3.png)
+
+先 180° 转换，然后再 padding，最后卷积，得到目标输出
+
+而卷积，在计算机内部，并不是通过滑动窗口来计算的，而是通过下图所示的矩阵乘法的操作
+
+![FCN_Upsample_TransposeConv4](assets/FCN_Upsample_TransposeConv4.png)
+
+
+
+![FCN_Upsample_TransposeConv5](assets/FCN_Upsample_TransposeConv5.png)
+
+![FCN_Upsample_TransposeConv6](assets/FCN_Upsample_TransposeConv6.png)
+
+![FCN_Upsample_TransposeConv7](assets/FCN_Upsample_TransposeConv7.png)
+
+```bash
+vim conv_transpose.py
+```
+
+```python
+# conv_transpose.py
+import numpy as np
+import paddle.fluid as fluid
+from paddle.fluid.dygraph import to_variable
+from paddle.fluid import ParamAttr
+np.set_precisions(precision=2)
+
+def main():
+    x = np.array([[1,2],
+                  [3,4]])
+    x = x.astype(np.float32)
+    x = x[np.newaxis, np.newaxis, :, :]
+
+    with fluid.dygraph.guard(fluid.CPUPlace()):
+        x = to_variable(x)
+        param_attr = ParamAttr(
+            name='param',
+            initializer=fluid.initializer.Constant(1.0)
+        )
+        conv_t = fluid.dygraph.Conv2DTranspose(num_channels=1,
+                                                        num_filters=1,
+                                                        filter_size=3,
+                                                        param_attr=param_attr)
+        out = conv_t(x)
+        out = out.numpy()
+        print(out.squeeze((0,1)))
+    
+if __name__ == '__main__':
+    main()
+```
+
+
+
+
+
+## Part 2 实践部分
+
+
+
+关于 FCN 中的 [AdaptiveAvgPool2d][]
+
+
+
+
+
 
 
 
 
 [align_corners]: https://zhuanlan.zhihu.com/p/87572724	"一文看懂align_corners"
+
+[AdaptiveAvgPool2d]: https://www.zhihu.com/question/282046628	"Pytorch 里 nn.AdaptiveAvgPool2d(output_size) 原理是什么?"
 
